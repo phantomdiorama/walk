@@ -1,4 +1,4 @@
-# :hiking_boot: walk :suspect:
+# walk :hiking_boot:
 
 **NOTE:** This fork only swaps arrow movement for WASD (see usage).
 
