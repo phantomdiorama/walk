@@ -49,17 +49,17 @@ var (
 	keyForceQuit = key.NewBinding(key.WithKeys("ctrl+c"))
 	keyQuit      = key.NewBinding(key.WithKeys("esc"))
 	keyQuitQ     = key.NewBinding(key.WithKeys("q"))
-	keyOpen      = key.NewBinding(key.WithKeys("enter"))
+	keyOpen      = key.NewBinding(key.WithKeys(" "))
 	keyBack      = key.NewBinding(key.WithKeys("backspace"))
 	keyFnDelete  = key.NewBinding(key.WithKeys("delete"))
-	keyUp        = key.NewBinding(key.WithKeys("up"))
-	keyDown      = key.NewBinding(key.WithKeys("down"))
-	keyLeft      = key.NewBinding(key.WithKeys("left"))
-	keyRight     = key.NewBinding(key.WithKeys("right"))
-	keyTop       = key.NewBinding(key.WithKeys("shift+up"))
-	keyBottom    = key.NewBinding(key.WithKeys("shift+down"))
-	keyLeftmost  = key.NewBinding(key.WithKeys("shift+left"))
-	keyRightmost = key.NewBinding(key.WithKeys("shift+right"))
+	keyUp        = key.NewBinding(key.WithKeys("w"))
+	keyDown      = key.NewBinding(key.WithKeys("s"))
+	keyLeft      = key.NewBinding(key.WithKeys("a"))
+	keyRight     = key.NewBinding(key.WithKeys("d"))
+	keyTop       = key.NewBinding(key.WithKeys("shift+w"))
+	keyBottom    = key.NewBinding(key.WithKeys("shift+s"))
+	keyLeftmost  = key.NewBinding(key.WithKeys("shift+a"))
+	keyRightmost = key.NewBinding(key.WithKeys("shift+d"))
 	keyPageUp    = key.NewBinding(key.WithKeys("pgup"))
 	keyPageDown  = key.NewBinding(key.WithKeys("pgdown"))
 	keyHome      = key.NewBinding(key.WithKeys("home"))
@@ -71,8 +71,7 @@ var (
 	keyVimTop    = key.NewBinding(key.WithKeys("g"))
 	keyVimBottom = key.NewBinding(key.WithKeys("G"))
 	keySearch    = key.NewBinding(key.WithKeys("/"))
-	keyPreview   = key.NewBinding(key.WithKeys(" "))
-	keyDelete    = key.NewBinding(key.WithKeys("d"))
+	keyPreview   = key.NewBinding(key.WithKeys(","))
 	keyUndo      = key.NewBinding(key.WithKeys("u"))
 	keyYank      = key.NewBinding(key.WithKeys("y"))
 	keyHidden    = key.NewBinding(key.WithKeys("."))
@@ -366,7 +365,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, tea.ExitAltScreen
 			}
 
-		case key.Matches(msg, keyDelete, keyFnDelete):
+		case key.Matches(msg, keyFnDelete):
 			filePathToDelete, ok := m.filePath()
 			if ok {
 				if m.deleteCurrentFile {

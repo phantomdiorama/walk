@@ -1,4 +1,6 @@
-# 🥾 walk
+# :hiking_boot: walk :suspect:
+
+**NOTE:** This fork only swaps arrow movement for WASD (see usage).
 
 <p align="center">
   <br>
@@ -74,13 +76,13 @@ Now use `lk` command to start walking.
 
 ### Preview mode
 
-Press `Space` to toggle preview mode.
+Press `,` to toggle preview mode.
 
 <img src=".github/images/preview-mode.gif" width="600" alt="Walk Preview Mode">
 
 ### Delete file or directory
 
-Press `dd` to delete file or directory. Press `u` to undo.
+Press `delete` to delete file or directory. Press `u` to undo.
 
 <img src=".github/images/rm-demo.gif" width="600" alt="Walk Deletes a File">
 
@@ -100,15 +102,15 @@ No additional setup is required.
 
 | Key binding      | Description        |
 |------------------|--------------------|
-| `arrows`, `hjkl` | Move cursor        |
-| `shift+arrows`   | Jump to start/end  |
-| `enter`          | Enter directory    |
+| `WASD`, `hjkl  ` | Move cursor        |
+| `shift+WASD`     | Jump to start/end  |
+| `space`          | Enter directory    |
 | `backspace`      | Exit directory     |
-| `space`          | Toggle preview     |
+| `,`              | Toggle preview     |
 | `esc`, `q`       | Exit with cd       |
 | `ctrl+c`         | Exit without cd    |
 | `/`              | Fuzzy search       |
-| `d`, `delete`    | Delete file or dir |
+| `delete`         | Delete file or dir |
 | `y`              | yank current dir   |
 | `.`              | Hide hidden files  |
 
