@@ -1,6 +1,12 @@
 # walk :hiking_boot:
 
-**NOTE:** This fork only swaps arrow movement for WASD (see usage).
+**This fork:**
+
+- Configures Walk for left-handed use
+- Differences with upstream are signposted with a :warning:
+- Feature parity is a non-goal
+
+---
 
 <p align="center">
   <br>
@@ -11,12 +17,14 @@
 **Walk** — a terminal navigator.
 
 Why another terminal navigator? I wanted something simple and minimalistic.
-Something to help me with faster navigation in the filesystem; a `cd` and `ls`
+Something to help me with faster navigation in the filesystem; a cd and ls
 replacement. So I build **walk**. It allows for quick navigation with fuzzy
-searching, `cd` integration is quite simple. And you can open `vim` right from
+searching, cd integration is quite simple. And you can open vim right from
 the walk. That's it.
 
-## Install
+## Install :warning:
+
+NOTE: Install methoäs here don't work use `go build` for now.
 
 ```
 brew install walk
@@ -34,14 +42,7 @@ Or download [prebuild binaries](https://github.com/antonmedv/walk/releases).
 
 Put the next function into the **.bashrc** or a similar config:
 
-<table>
-<tr>
-  <th> Bash/Zsh </th>
-  <th> Fish </th>
-  <th> PowerShell </th>
-</tr>
-<tr>
-<td>
+Bash:
 
 ```bash
 function lk {
@@ -49,8 +50,7 @@ function lk {
 }
 ```
 
-</td>
-<td>
+Fish:
 
 ```fish
 function lk
@@ -58,8 +58,7 @@ function lk
 end
 ```
 
-</td>
-<td>
+Powershell:
 
 ```powershell
 function lk() {
@@ -67,12 +66,7 @@ function lk() {
 }
 ```
 
-</td>
-</tr>
-</table>
-
-
-Now use `lk` command to start walking.
+Now use lk command to start walking.
 
 ### Preview mode
 
@@ -88,7 +82,7 @@ Press `delete` to delete file or directory. Press `u` to undo.
 
 ### Display icons
 
-Install [Nerd Fonts](https://www.nerdfonts.com) and add `--icons` flag.
+Install [Nerd Fonts](https://www.nerdfonts.com) and add --icons flag.
 
 <img src=".github/images/demo-icons.gif" width="600" alt="Walk Icons Support">
 
@@ -98,34 +92,40 @@ No additional setup is required.
 
 <img src=".github/images/images-mode.gif" width="600" alt="Walk Image Preview">
 
-## Usage
+## Usage :warning:
 
-| Key binding      | Description        |
-|------------------|--------------------|
-| `WASD`, `hjkl  ` | Move cursor        |
-| `shift+WASD`     | Jump to start/end  |
-| `space`          | Enter directory    |
-| `backspace`      | Exit directory     |
-| `,`              | Toggle preview     |
-| `esc`, `q`       | Exit with cd       |
-| `ctrl+c`         | Exit without cd    |
-| `/`              | Fuzzy search       |
-| `delete`         | Delete file or dir |
-| `y`              | yank current dir   |
-| `.`              | Hide hidden files  |
+```
+ Key binding       Description
+--------------------------------------
+WASD, hjkl      Move cursor
+shift+WASD      Jump to start/end
+space           Enter directory
+backspace       Exit directory
+,               Toggle preview
+esc, q          Exit with cd
+ctrl+c          Exit without cd
+/               Fuzzy search
+delete          Delete file or dir
+y               yank current dir
+.               Hide hidden files
+g               Move to top of col
+G               Move to bottom of col
+Home            Move to beginning
+End             Move to end
+```
 
 ## Configuration
 
-The `EDITOR` or `WALK_EDITOR` environment variable used for opening files from
+The EDITOR or WALK_EDITOR environment variable used for opening files from
 the walk.
 
 ```bash
 export EDITOR=vim
 ```
 
-The `WALK_REMOVE_CMD` environment variable can be used to specify a command to
+The WALK_REMOVE_CMD environment variable can be used to specify a command to
 be used to remove files. This is useful if you want to use a different
-command to remove files than the default `rm`.
+command to remove files than the default rm.
 
 ```bash
 export WALK_REMOVE_CMD=trash
@@ -133,12 +133,12 @@ export WALK_REMOVE_CMD=trash
 
 Flags can be used to change the default behavior of the program.
 
-| Flag         | Description                |
-|--------------|----------------------------|
-| `--icons`    | Show icons                 |
-| `--dir-only` | Show dirs only             |
-| `--preview`  | Start with preview mode on |
-| `--fuzzy`    | Start with fuzzy search on |
+ Flag          Description
+------------------------------------------
+ --icons     Show icons
+ --dir-only  Show dirs only
+ --preview   Start with preview mode on
+ --fuzzy     Start with fuzzy search on
 
 ## License
 
