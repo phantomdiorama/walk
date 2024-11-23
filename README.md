@@ -66,7 +66,7 @@ function lk() {
 }
 ```
 
-Now use lk command to start walking.
+Now use `lk` command to start walking.
 
 ### Preview mode
 
@@ -99,7 +99,7 @@ No additional setup is required.
 --------------------------------------
 WASD, hjkl      Move cursor
 shift+WASD      Jump to start/end
-space           Enter directory
+space           Enter directory/Open file
 backspace       Exit directory
 ,               Toggle preview
 esc, q          Exit with cd
@@ -114,14 +114,10 @@ Home            Move to beginning
 End             Move to end
 ```
 
-## Configuration
+## Configuration :warning:
 
-The EDITOR or WALK_EDITOR environment variable used for opening files from
-the walk.
-
-```bash
-export EDITOR=vim
-```
+Files open in their default programs. Windows only for now. Requires
+`pwsh` in path. **Experimental**.
 
 The WALK_REMOVE_CMD environment variable can be used to specify a command to
 be used to remove files. This is useful if you want to use a different

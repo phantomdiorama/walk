@@ -741,7 +741,7 @@ func (m *model) openEditor() tea.Cmd {
 		return nil
 	}
 
-	cmdline := Split(lookup([]string{"WALK_EDITOR", "EDITOR"}, "less"), " ")
+	cmdline := Split("pwsh /c Invoke-Item", " ")
 	cmdline = append(cmdline, filePath)
 
 	execCmd := exec.Command(cmdline[0], cmdline[1:]...)
