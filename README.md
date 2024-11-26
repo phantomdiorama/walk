@@ -24,23 +24,9 @@ the walk. That's it.
 
 ## Install :warning:
 
-NOTE: Install methoäs here don't work use `go build` for now.
+Use `go build` for now.
 
-```
-brew install walk
-```
-
-```
-pkg_add walk
-```
-
-```
-go install github.com/antonmedv/walk@latest
-```
-
-Or download [prebuild binaries](https://github.com/antonmedv/walk/releases).
-
-Put the next function into the **.bashrc** or a similar config:
+Then put this function into the **.bashrc** or a similar config:
 
 Bash:
 
@@ -97,8 +83,8 @@ No additional setup is required.
 ```
  Key binding       Description
 --------------------------------------
-WASD, hjkl      Move cursor
-shift+WASD      Jump to start/end
+wasd, hjkl      Move cursor
+shift+wasd      Jump to start/end
 space           Enter directory/Open file
 backspace       Exit directory
 ,               Toggle preview
@@ -129,12 +115,14 @@ export WALK_REMOVE_CMD=trash
 
 Flags can be used to change the default behavior of the program.
 
+```
  Flag          Description
 ------------------------------------------
  --icons     Show icons
  --dir-only  Show dirs only
  --preview   Start with preview mode on
  --fuzzy     Start with fuzzy search on
+```
 
 ## License
 
