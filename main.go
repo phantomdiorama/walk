@@ -46,35 +46,53 @@ var (
 )
 
 var (
-	keyForceQuit = key.NewBinding(key.WithKeys("ctrl+c"))
-	keyQuit      = key.NewBinding(key.WithKeys("esc"))
-	keyQuitQ     = key.NewBinding(key.WithKeys("q"))
-	keyOpen      = key.NewBinding(key.WithKeys(" "))
-	keyBack      = key.NewBinding(key.WithKeys("backspace"))
-	keyFnDelete  = key.NewBinding(key.WithKeys("delete"))
-	keyUp        = key.NewBinding(key.WithKeys("w"))
-	keyDown      = key.NewBinding(key.WithKeys("s"))
-	keyLeft      = key.NewBinding(key.WithKeys("a"))
-	keyRight     = key.NewBinding(key.WithKeys("d"))
-	keyTop       = key.NewBinding(key.WithKeys("shift+w"))
-	keyBottom    = key.NewBinding(key.WithKeys("shift+s"))
-	keyLeftmost  = key.NewBinding(key.WithKeys("shift+a"))
-	keyRightmost = key.NewBinding(key.WithKeys("shift+d"))
-	keyPageUp    = key.NewBinding(key.WithKeys("pgup"))
-	keyPageDown  = key.NewBinding(key.WithKeys("pgdown"))
-	keyHome      = key.NewBinding(key.WithKeys("home"))
-	keyEnd       = key.NewBinding(key.WithKeys("end"))
-	keyVimUp     = key.NewBinding(key.WithKeys("k"))
-	keyVimDown   = key.NewBinding(key.WithKeys("j"))
-	keyVimLeft   = key.NewBinding(key.WithKeys("h"))
-	keyVimRight  = key.NewBinding(key.WithKeys("l"))
-	keyVimTop    = key.NewBinding(key.WithKeys("g"))
-	keyVimBottom = key.NewBinding(key.WithKeys("G"))
-	keySearch    = key.NewBinding(key.WithKeys("/"))
-	keyPreview   = key.NewBinding(key.WithKeys(","))
-	keyUndo      = key.NewBinding(key.WithKeys("u"))
-	keyYank      = key.NewBinding(key.WithKeys("y"))
-	keyHidden    = key.NewBinding(key.WithKeys("."))
+// arrow movement
+	keyUp            = key.NewBinding(key.WithKeys("up"))
+	keyDown          = key.NewBinding(key.WithKeys("down"))
+	keyLeft          = key.NewBinding(key.WithKeys("left"))
+	keyRight         = key.NewBinding(key.WithKeys("right"))
+	keyTop           = key.NewBinding(key.WithKeys("shift+up"))
+	keyBottom        = key.NewBinding(key.WithKeys("shift+down"))
+	keyLeftmost      = key.NewBinding(key.WithKeys("shift+left"))
+	keyRightmost     = key.NewBinding(key.WithKeys("shift+right"))
+// doom movement
+	keyDoomUp        = key.NewBinding(key.WithKeys("w"))
+	keyDoomDown      = key.NewBinding(key.WithKeys("s"))
+	keyDoomLeft      = key.NewBinding(key.WithKeys("a"))
+	keyDoomRight     = key.NewBinding(key.WithKeys("d"))
+	keyDoomTop       = key.NewBinding(key.WithKeys("W"))
+	keyDoomBottom    = key.NewBinding(key.WithKeys("S"))
+	keyDoomLeftmost  = key.NewBinding(key.WithKeys("A"))
+	keyDoomRightmost = key.NewBinding(key.WithKeys("D"))
+// vim movement
+	keyVimUp         = key.NewBinding(key.WithKeys("k"))
+	keyVimDown       = key.NewBinding(key.WithKeys("j"))
+	keyVimLeft       = key.NewBinding(key.WithKeys("h"))
+	keyVimRight      = key.NewBinding(key.WithKeys("l"))
+	keyVimTop        = key.NewBinding(key.WithKeys("g"))
+	keyVimBottom     = key.NewBinding(key.WithKeys("G"))
+	keyVimLeftmost   = key.NewBinding(key.WithKeys("H"))
+	keyVimRightmost  = key.NewBinding(key.WithKeys("L"))
+
+// common movement
+	keyPageUp        = key.NewBinding(key.WithKeys("pgup"))
+	keyPageDown      = key.NewBinding(key.WithKeys("pgdown"))
+	keyHome          = key.NewBinding(key.WithKeys("home"))
+	keyEnd           = key.NewBinding(key.WithKeys("end"))
+// hotkeys
+	keyForceQuit     = key.NewBinding(key.WithKeys("ctrl+c"))
+	keyQuit          = key.NewBinding(key.WithKeys("esc"))
+	keyQuitQ         = key.NewBinding(key.WithKeys("q"))
+	keyOpen          = key.NewBinding(key.WithKeys("enter"))
+	keyAltOpen       = key.NewBinding(key.WithKeys(" "))
+	keyBack          = key.NewBinding(key.WithKeys("backspace"))
+	keyFnDelete      = key.NewBinding(key.WithKeys("delete"))
+	keySearch        = key.NewBinding(key.WithKeys("/"))
+	keyAltSearch     = key.NewBinding(key.WithKeys("f"))
+	keyPreview       = key.NewBinding(key.WithKeys(","))
+	keyUndo          = key.NewBinding(key.WithKeys("u"))
+	keyYank          = key.NewBinding(key.WithKeys("y"))
+	keyHidden        = key.NewBinding(key.WithKeys("."))
 )
 
 func main() {
@@ -229,7 +247,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				})
 			}
 		} else if m.searchMode {
-			if key.Matches(msg, keySearch) {
+			if key.Matches(msg, keySearch, keyAltSearch) {
 				m.searchMode = false
 				return m, nil
 			} else if key.Matches(msg, keyBack) {
@@ -259,7 +277,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.performPendingDeletions()
 			return m, tea.Quit
 
-		case key.Matches(msg, keyOpen):
+		case key.Matches(msg, keyOpen, keyAltOpen):
 			m.search = ""
 			m.searchMode = false
 			filePath, ok := m.filePath()
@@ -298,20 +316,29 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			m.list()
 			return m, nil
-
-		case key.Matches(msg, keyUp):
+// movement
+		case key.Matches(msg, keyUp, keyDoomUp, keyVimUp):
 			m.moveUp()
 
-		case key.Matches(msg, keyTop, keyPageUp, keyVimTop):
+		case key.Matches(msg, keyDown, keyDoomDown, keyVimDown):
+			m.moveDown()
+
+		case key.Matches(msg, keyLeft, keyDoomLeft, keyVimLeft):
+			m.moveLeft()
+
+		case key.Matches(msg, keyRight, keyDoomRight, keyVimRight):
+			m.moveRight()
+
+		case key.Matches(msg, keyTop, keyPageUp, keyDoomTop, keyVimTop):
 			m.moveTop()
 
-		case key.Matches(msg, keyBottom, keyPageDown, keyVimBottom):
+		case key.Matches(msg, keyBottom, keyPageDown, keyDoomBottom, keyVimBottom):
 			m.moveBottom()
 
-		case key.Matches(msg, keyLeftmost):
+		case key.Matches(msg, keyLeftmost, keyDoomLeftmost, keyVimLeftmost):
 			m.moveLeftmost()
 
-		case key.Matches(msg, keyRightmost):
+		case key.Matches(msg, keyRightmost, keyDoomRightmost, keyVimRightmost):
 			m.moveRightmost()
 
 		case key.Matches(msg, keyHome):
@@ -320,28 +347,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, keyEnd):
 			m.moveEnd()
 
-		case key.Matches(msg, keyVimUp):
-			m.moveUp()
-
-		case key.Matches(msg, keyDown):
-			m.moveDown()
-
-		case key.Matches(msg, keyVimDown):
-			m.moveDown()
-
-		case key.Matches(msg, keyLeft):
-			m.moveLeft()
-
-		case key.Matches(msg, keyVimLeft):
-			m.moveLeft()
-
-		case key.Matches(msg, keyRight):
-			m.moveRight()
-
-		case key.Matches(msg, keyVimRight):
-			m.moveRight()
-
-		case key.Matches(msg, keySearch):
+		case key.Matches(msg, keySearch, keyAltSearch):
 			m.searchMode = true
 			m.searchId++
 			m.search = ""
