@@ -84,25 +84,27 @@ No additional setup is required.
  Key binding       Description
 --------------------------------------
 arrows, wasd, hjkl  Move cursor
-enter, space        Enter directory/Open file
-backspace           Exit directory
-,                   Toggle preview
-esc, q              Exit with cd
-ctrl+c              Exit without cd
-/, f                Fuzzy search
-delete              Delete file or dir
-y                   Yank current dir
-.                   Hide hidden files
 shift+up, W, g      Move to top of column
 shift+dn, D, G      Move to bottom of column
 Home                Move to beginning
 End                 Move to end
+enter, space        Enter directory/Open file
+backspace           Exit directory
+esc, q              Exit with cd
+ctrl+c              Exit without cd
+,                   Toggle preview
+.                   Hide hidden files
+/, f                Fuzzy search
+delete              Delete file or dir
+y                   Yank current dir
+
 ```
 
-## Configuration :warning:
+**Note:** Files should open in their default programs. This uses
+Invoke-Item on Windows or xdg-open on Linux. This is **very
+experimental**.
 
-**Experimental:** Files open in their default programs. Windows only for
-now. Requires `pwsh` in path.
+## Configuration :warning:
 
 The WALK_REMOVE_CMD environment variable can be used to specify a command to
 be used to remove files. This is useful if you want to use a different

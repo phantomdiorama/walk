@@ -46,16 +46,16 @@ var (
 )
 
 var (
-// arrow movement
-	keyUp            = key.NewBinding(key.WithKeys("up"))
-	keyDown          = key.NewBinding(key.WithKeys("down"))
-	keyLeft          = key.NewBinding(key.WithKeys("left"))
-	keyRight         = key.NewBinding(key.WithKeys("right"))
-	keyTop           = key.NewBinding(key.WithKeys("shift+up"))
-	keyBottom        = key.NewBinding(key.WithKeys("shift+down"))
-	keyLeftmost      = key.NewBinding(key.WithKeys("shift+left"))
-	keyRightmost     = key.NewBinding(key.WithKeys("shift+right"))
-// doom movement
+	// arrow movement
+	keyUp        = key.NewBinding(key.WithKeys("up"))
+	keyDown      = key.NewBinding(key.WithKeys("down"))
+	keyLeft      = key.NewBinding(key.WithKeys("left"))
+	keyRight     = key.NewBinding(key.WithKeys("right"))
+	keyTop       = key.NewBinding(key.WithKeys("shift+up"))
+	keyBottom    = key.NewBinding(key.WithKeys("shift+down"))
+	keyLeftmost  = key.NewBinding(key.WithKeys("shift+left"))
+	keyRightmost = key.NewBinding(key.WithKeys("shift+right"))
+	// doom movement
 	keyDoomUp        = key.NewBinding(key.WithKeys("w"))
 	keyDoomDown      = key.NewBinding(key.WithKeys("s"))
 	keyDoomLeft      = key.NewBinding(key.WithKeys("a"))
@@ -64,35 +64,35 @@ var (
 	keyDoomBottom    = key.NewBinding(key.WithKeys("S"))
 	keyDoomLeftmost  = key.NewBinding(key.WithKeys("A"))
 	keyDoomRightmost = key.NewBinding(key.WithKeys("D"))
-// vim movement
-	keyVimUp         = key.NewBinding(key.WithKeys("k"))
-	keyVimDown       = key.NewBinding(key.WithKeys("j"))
-	keyVimLeft       = key.NewBinding(key.WithKeys("h"))
-	keyVimRight      = key.NewBinding(key.WithKeys("l"))
-	keyVimTop        = key.NewBinding(key.WithKeys("g"))
-	keyVimBottom     = key.NewBinding(key.WithKeys("G"))
-	keyVimLeftmost   = key.NewBinding(key.WithKeys("H"))
-	keyVimRightmost  = key.NewBinding(key.WithKeys("L"))
+	// vim movement
+	keyVimUp        = key.NewBinding(key.WithKeys("k"))
+	keyVimDown      = key.NewBinding(key.WithKeys("j"))
+	keyVimLeft      = key.NewBinding(key.WithKeys("h"))
+	keyVimRight     = key.NewBinding(key.WithKeys("l"))
+	keyVimTop       = key.NewBinding(key.WithKeys("g"))
+	keyVimBottom    = key.NewBinding(key.WithKeys("G"))
+	keyVimLeftmost  = key.NewBinding(key.WithKeys("H"))
+	keyVimRightmost = key.NewBinding(key.WithKeys("L"))
 
-// common movement
-	keyPageUp        = key.NewBinding(key.WithKeys("pgup"))
-	keyPageDown      = key.NewBinding(key.WithKeys("pgdown"))
-	keyHome          = key.NewBinding(key.WithKeys("home"))
-	keyEnd           = key.NewBinding(key.WithKeys("end"))
-// hotkeys
-	keyForceQuit     = key.NewBinding(key.WithKeys("ctrl+c"))
-	keyQuit          = key.NewBinding(key.WithKeys("esc"))
-	keyQuitQ         = key.NewBinding(key.WithKeys("q"))
-	keyOpen          = key.NewBinding(key.WithKeys("enter"))
-	keyAltOpen       = key.NewBinding(key.WithKeys(" "))
-	keyBack          = key.NewBinding(key.WithKeys("backspace"))
-	keyFnDelete      = key.NewBinding(key.WithKeys("delete"))
-	keySearch        = key.NewBinding(key.WithKeys("/"))
-	keyAltSearch     = key.NewBinding(key.WithKeys("f"))
-	keyPreview       = key.NewBinding(key.WithKeys(","))
-	keyUndo          = key.NewBinding(key.WithKeys("u"))
-	keyYank          = key.NewBinding(key.WithKeys("y"))
-	keyHidden        = key.NewBinding(key.WithKeys("."))
+	// common movement
+	keyPageUp   = key.NewBinding(key.WithKeys("pgup"))
+	keyPageDown = key.NewBinding(key.WithKeys("pgdown"))
+	keyHome     = key.NewBinding(key.WithKeys("home"))
+	keyEnd      = key.NewBinding(key.WithKeys("end"))
+	// hotkeys
+	keyForceQuit = key.NewBinding(key.WithKeys("ctrl+c"))
+	keyQuit      = key.NewBinding(key.WithKeys("esc"))
+	keyQuitQ     = key.NewBinding(key.WithKeys("q"))
+	keyOpen      = key.NewBinding(key.WithKeys("enter"))
+	keyAltOpen   = key.NewBinding(key.WithKeys(" "))
+	keyBack      = key.NewBinding(key.WithKeys("backspace"))
+	keyFnDelete  = key.NewBinding(key.WithKeys("delete"))
+	keySearch    = key.NewBinding(key.WithKeys("/"))
+	keyAltSearch = key.NewBinding(key.WithKeys("f"))
+	keyPreview   = key.NewBinding(key.WithKeys(","))
+	keyUndo      = key.NewBinding(key.WithKeys("u"))
+	keyYank      = key.NewBinding(key.WithKeys("y"))
+	keyHidden    = key.NewBinding(key.WithKeys("."))
 )
 
 func main() {
@@ -316,7 +316,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			m.list()
 			return m, nil
-// movement
+			// movement
 		case key.Matches(msg, keyUp, keyDoomUp, keyVimUp):
 			m.moveUp()
 
@@ -747,7 +747,17 @@ func (m *model) openEditor() tea.Cmd {
 		return nil
 	}
 
-	cmdline := Split("pwsh /c Invoke-Item", " ")
+	openHandler := ""
+
+	if runtime.GOOS == "windows" {
+		openHandler = "pwsh /c Invoke-Item"
+	} else if runtime.GOOS == "darwin" {
+		openHandler = "open"
+	} else {
+		openHandler = "xdg-open"
+	}
+
+	cmdline := Split(openHandler, " ")
 	cmdline = append(cmdline, filePath)
 
 	execCmd := exec.Command(cmdline[0], cmdline[1:]...)
