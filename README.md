@@ -2,7 +2,7 @@
 
 **This fork:**
 
-- Configures Walk for left-handed use
+- Adds WSAD movement
 - Differences with upstream are signposted with a :warning:
 - Feature parity is a non-goal
 
