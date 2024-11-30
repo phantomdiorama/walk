@@ -36,12 +36,12 @@ var (
 		MarginLeft(2).
 		PaddingLeft(2).
 		BorderStyle(lipgloss.NormalBorder()).
-		BorderForeground(lipgloss.Color("#825DF2")).
+		BorderForeground(lipgloss.Color("5")).
 		BorderLeft(true)
-	cursor           = lipgloss.NewStyle().Background(lipgloss.Color("#825DF2")).Foreground(lipgloss.Color("#FFFFFF"))
-	bar              = lipgloss.NewStyle().Background(lipgloss.Color("#5C5C5C")).Foreground(lipgloss.Color("#FFFFFF"))
-	search           = lipgloss.NewStyle().Background(lipgloss.Color("#499F1C")).Foreground(lipgloss.Color("#FFFFFF"))
-	danger           = lipgloss.NewStyle().Background(lipgloss.Color("#FF0000")).Foreground(lipgloss.Color("#FFFFFF"))
+	cursor           = lipgloss.NewStyle().Background(lipgloss.Color("5")).Foreground(lipgloss.Color("15"))
+	bar              = lipgloss.NewStyle().Background(lipgloss.Color("8")).Foreground(lipgloss.Color("15"))
+	search           = lipgloss.NewStyle().Background(lipgloss.Color("2")).Foreground(lipgloss.Color("15"))
+	danger           = lipgloss.NewStyle().Background(lipgloss.Color("1")).Foreground(lipgloss.Color("15"))
 	fileSeparator    = string(filepath.Separator)
 	showIcons        = false
 	dirOnly          = false

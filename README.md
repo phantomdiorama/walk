@@ -85,7 +85,9 @@ No additional setup is required.
 --------------------------------------
 arrows, wasd, hjkl  Move cursor
 shift+up, W, g      Move to top of column
-shift+dn, D, G      Move to bottom of column
+shift+dn, S, G      Move to bottom of column
+shift+lt, A, H      Move to left-most column
+shift+rt, D, L      Move to right-most column
 Home                Move to beginning
 End                 Move to end
 enter, space        Enter directory/Open file
@@ -100,9 +102,12 @@ y                   Yank current dir
 
 ```
 
-**Note:** Files should open in their default programs. This uses
-Invoke-Item on Windows or xdg-open on Linux. This is **very
-experimental**.
+**Note:** Files should open in their default programs using:
+  - Invoke-Item on Windows
+  - xdg-open on Linux
+  - open on Mac (untested)
+  - This is **experimental**.
+
 
 ## Configuration :warning:
 
