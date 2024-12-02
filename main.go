@@ -753,12 +753,13 @@ func (m *model) openEditor() tea.Cmd {
 	}
 
 	openHandler := ""
-
-	if runtime.GOOS == "windows" {
+	os := runtime.GOOS
+	switch os {
+	case "windows":
 		openHandler = "pwsh /c Invoke-Item"
-	} else if runtime.GOOS == "darwin" {
+	case "darwin":
 		openHandler = "open"
-	} else {
+	case "linux":
 		openHandler = "xdg-open"
 	}
 
