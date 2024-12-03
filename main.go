@@ -90,6 +90,7 @@ var (
 	keyQuitQ     = key.NewBinding(key.WithKeys("q"))
 	keyOpen      = key.NewBinding(key.WithKeys("enter"))
 	keyAltOpen   = key.NewBinding(key.WithKeys(" "))
+	keyEdit      = key.NewBinding(key.WithKeys("e"))
 	keyBack      = key.NewBinding(key.WithKeys("backspace"))
 	keyFnDelete  = key.NewBinding(key.WithKeys("delete"))
 	keySearch    = key.NewBinding(key.WithKeys("/"))
@@ -282,7 +283,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.performPendingDeletions()
 			return m, tea.Quit
 
-		case key.Matches(msg, keyOpen, keyAltOpen):
+		case key.Matches(msg, keyOpen, keyAltOpen, keyEdit):
 			m.search = ""
 			m.searchMode = false
 			filePath, ok := m.filePath()
@@ -303,8 +304,13 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 				m.list()
 			} else {
-				// Open file. This will block until complete.
-				return m, m.openEditor()
+				if key.Matches(msg, keyOpen, keyAltOpen) {
+					// Open file. This will block until complete.
+					return m, m.openMime()
+				} else {
+					// Edit file
+					return m, m.openEditor()
+				}
 			}
 
 		case key.Matches(msg, keyBack):
@@ -746,7 +752,7 @@ func (m *model) filePath() (string, bool) {
 	return path.Join(m.path, fileName), true
 }
 
-func (m *model) openEditor() tea.Cmd {
+func (m *model) openMime() tea.Cmd {
 	filePath, ok := m.filePath()
 	if !ok {
 		return nil
@@ -764,6 +770,24 @@ func (m *model) openEditor() tea.Cmd {
 	}
 
 	cmdline := Split(openHandler, " ")
+	cmdline = append(cmdline, filePath)
+
+	execCmd := exec.Command(cmdline[0], cmdline[1:]...)
+	return tea.ExecProcess(execCmd, func(err error) tea.Msg {
+		// Note: we could return a message here indicating that editing is
+		// finished and altering our application about any errors. For now,
+		// however, that's not necessary.
+		return nil
+	})
+}
+
+func (m *model) openEditor() tea.Cmd {
+	filePath, ok := m.filePath()
+	if !ok {
+		return nil
+	}
+
+	cmdline := Split(lookup([]string{"WALK_EDITOR", "EDITOR"}, "less"), " ")
 	cmdline = append(cmdline, filePath)
 
 	execCmd := exec.Command(cmdline[0], cmdline[1:]...)

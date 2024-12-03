@@ -2,7 +2,6 @@
 
 **This fork:**
 
-- Adds WSAD movement
 - Differences with upstream are signposted with a :warning:
 - Feature parity is a non-goal
 
@@ -16,11 +15,11 @@
 
 **Walk** — a terminal navigator.
 
-Why another terminal navigator? I wanted something simple and minimalistic.
-Something to help me with faster navigation in the filesystem; a cd and ls
-replacement. So I build **walk**. It allows for quick navigation with fuzzy
-searching, cd integration is quite simple. And you can open vim right from
-the walk. That's it.
+Why another terminal navigator? I wanted something simple and
+minimalistic.  Something to help me with faster navigation in the
+filesystem; a cd and ls replacement. So I build **walk**. It allows for
+quick navigation with fuzzy searching, cd integration is quite simple. And
+you can open vim right from the walk. That's it.
 
 ## Install :warning:
 
@@ -91,6 +90,8 @@ shift+rt, D, L      Move to right-most column
 Home                Move to beginning
 End                 Move to end
 enter, space        Enter directory/Open file
+enter, space        Enter directory/Open file
+e                   Edit file
 backspace           Exit directory
 esc, q              Exit with cd
 ctrl+c              Exit without cd
@@ -111,9 +112,16 @@ y                   Yank current dir
 
 ## Configuration :warning:
 
-The WALK_REMOVE_CMD environment variable can be used to specify a command to
-be used to remove files. This is useful if you want to use a different
-command to remove files than the default rm.
+The `EDITOR` or `WALK_EDITOR` environment variable used for opening files
+from the walk.
+
+```bash
+export EDITOR=vim
+```
+
+The `WALK_REMOVE_CMD` environment variable can be used to specify a
+command to be used to remove files. This is useful if you want to use a
+different command to remove files than the default `rm`.
 
 ```bash
 export WALK_REMOVE_CMD=trash
